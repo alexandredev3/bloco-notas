@@ -30,7 +30,7 @@ export default function Textcard(note: TextCardProps) {
       <Container>
         <div className="container">
           <div className="title">
-            <h2>{form.title}</h2>
+            <h2>{note.title}</h2>
             <button 
             onClick={
               () => openTextEditModal(
@@ -48,7 +48,7 @@ export default function Textcard(note: TextCardProps) {
             id="description" 
             cols={30} 
             rows={10} 
-            value={form.description} 
+            value={note.description} 
             readOnly={true} />
           </div>
           <button>Ver mais</button>

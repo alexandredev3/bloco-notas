@@ -29,20 +29,17 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       description: String(description)
     }
 
-    const note = User.findOneAndUpdate({ email: user.email}, {
+    // new: true retornará o documento atualizado
+    // se o new for false, ele vai retorna o documento antes de ser atualizado...
+    const note = await User.findOneAndUpdate({ email: user.email}, {
       $push: {
         note: noteData,
-    }
-    }).then(doc => {
-      doc.length += 1
-      doc.save()
-
-      console.log(note)
-    })
+      },
+    }, { new: true })
 
     console.log(note)
 
-    return res.json(user)
+    return res.json(note)
 
   } catch (err) {
     console.log(err)

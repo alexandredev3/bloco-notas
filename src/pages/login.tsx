@@ -8,8 +8,7 @@ import api from '../services/api'
 import Cookies from 'js-cookie'
 
 import { Container } from '../styles/pages/Login';
-import { TextProvider } from '../context/TextContext'
-import { Button } from '../components/Button/Button'
+  import { Button } from '../components/Button/Button'
 
 
 export default function Login() {
@@ -48,7 +47,6 @@ export default function Login() {
   // api.defaults.headers.authorization = "Bearer " + Cookies.get('authorization');
 
   return (
-    <TextProvider>
       <Container>
         <div className="container">
           <div className="form-container">
@@ -80,7 +78,5 @@ export default function Login() {
         </div>
         <Button/>
       </Container>
-    </TextProvider>
-
   )
 };

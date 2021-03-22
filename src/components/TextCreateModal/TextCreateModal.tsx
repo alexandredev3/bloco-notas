@@ -4,7 +4,7 @@ import { TextContext } from "../../context/TextContext";
 import { Overlay } from "./textCreateModal";
 
 export function TextCreateModal() {
-  const { closeTextCreateModal } = useContext(TextContext)
+  const { closeTextCreateModal, handleCreateNote } = useContext(TextContext)
   
   const [form, setForm] = useState({
     title: '',
@@ -18,14 +18,7 @@ export function TextCreateModal() {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    await axios.post('/api/controllers/noteController/createNewNote', form).then(response => {
-      console.log(response)
-      if (response) {
-        return closeTextCreateModal()
-      }
-    }).catch(error => {
-      console.error(error)
-    })
+    await handleCreateNote(form);
   }
 
   return (

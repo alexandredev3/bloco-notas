@@ -16,9 +16,19 @@ import Cookies from 'js-cookie'
 import { TextCardProps } from '../components/Textcard/Textcard'
 import api from '../services/api';
 
-export default function Home(props) {
+import { Note } from '../components/Note';
+
+interface Props {
+  notes: Array<{
+    _id: string;
+    title: string;
+    description: string;
+    note_index: string;
+  }>
+}
+
+export default function Home(props: Props) {
   const [theme, setTheme] = useState(light)
-  const [notes, setNotes] = useState(props.notes)
 
   function toggleTheme() {
     setTheme(theme.title === 'light' ? dark : light);
@@ -31,27 +41,13 @@ export default function Home(props) {
       <ThemeProvider theme={theme}>
         <GlobalStyle />
         <Siderbar toggleTheme={toggleTheme} />
-        <TextProvider>
+        <TextProvider
+          notes={props.notes}
+        >
           <Container>
             <main>
               <section>
-                {notes.length === 0 ? <h2 
-                style={{ color: '#fff' }}>
-                  No notes
-                  </h2> :
-                  notes.map((note: TextCardProps) => {
-                    // console.log('note', note)
-                    return (
-                      <Textcard 
-                      note_index={note.note_index} 
-                      key={note._id} 
-                      _id={note._id} 
-                      title={note.title} 
-                      description={note.description} />
-                    )
-                  }
-                  )
-                }
+                <Note />
               </section>
               <div className="button">
                 <Button />

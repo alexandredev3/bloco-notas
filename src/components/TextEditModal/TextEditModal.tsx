@@ -2,7 +2,6 @@ import axios from "axios";
 import { useCallback, useContext, useState } from "react";
 import { TextContext } from "../../context/TextContext";
 import { Overlay } from "./textEditModal";
-import { User } from "./../../utils/models/User";
 import Link from 'next/link'
 
 import { TextCardProps } from '../Textcard/Textcard'
@@ -11,7 +10,7 @@ import { Router } from "next/router";
 
 
 export function TextEditModal(note: TextCardProps) {
-const { closeTextEditModal } = useContext(TextContext)
+const { closeTextEditModal, handleUpdateNote, handleDeleteNote } = useContext(TextContext)
 
 const [form, setForm] = useState({
   note_index: note.note_index,
@@ -25,29 +24,14 @@ function formChange(event) {
 async function handleSubmit(event) {
   event.preventDefault();
 
-  await axios.put('/api/controllers/noteController/editNote', form).then(response => {
-    console.log(response)
-    if (response) {
-      closeTextEditModal()
-    }
-  }).catch(error => {
-    console.error(error)
-  })
+  await handleUpdateNote(form);
 }
 
+// fazer essa logica dentro do TextContext;
 async function handleDelete(event) {
   event.preventDefault()
 
-  const data = {
-    _id: note._id,
-  }
-
-  await api.post('/api/controllers/noteController/deleteNote', data).then(response => {
-    console.log(response)
-    if (response) {
-      return closeTextEditModal()
-    }
-  })
+  await handleDeleteNote(note._id)
 }
 
 const handleKeyUp = useCallback((event: React.FormEvent<HTMLInputElement>) => {
